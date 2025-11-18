@@ -1,0 +1,14 @@
+# archivos/carpetas ignoradas al momento de subir al git
+__pycache__/
+*.pyc
+
+env
+.env
+
+venv
+.venv
+
+virtualenv
+.virtualenv
+
+/migrations
