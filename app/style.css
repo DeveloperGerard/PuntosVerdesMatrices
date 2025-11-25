@@ -1,0 +1,29 @@
+.main {
+    background-color: greenyellow;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+#busq {
+
+    width: 400px;
+}
+
+.content {
+    height: 500px; 
+    width: 90%;
+    margin-left: 30px;
+}
+
+#map {
+    height: 500px;
+    width: 96vw;
+    border: 2px solid #00AA00;
+    margin-right: 20px;
+}
