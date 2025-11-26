@@ -4,6 +4,7 @@ const LATITUD_OSORNO = -40.58;
 const LONGITUD_OSORNO = -73.11;
 const ZOOM_INICIAL = 13;
 
+// Icono del marcador de los puntos verdes
 const IconoVerde = L.icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -13,6 +14,7 @@ const IconoVerde = L.icon({
     shadowSize: [41, 41]
 });
 
+// Icono del marcador del usuario
 const IconoUsuario = L.icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -35,6 +37,7 @@ function inicializarMapa() {
     function renderMarkers(puntos) {
         marcadoresLayer.clearLayers();
         puntos.forEach(function (punto) {
+            // se crean los marcadores ESTATICOS de puntos verdes 
             const marcador = L.marker([punto.lat, punto.lng], { icon: IconoVerde }).addTo(marcadoresLayer);
             marcador.bindPopup(`
                 <h3>${punto.nombre}</h3>
@@ -42,7 +45,8 @@ function inicializarMapa() {
             `);
 
             marcador.on('click', function (e) {
-                console.log('Marcador clickeado:', punto.nombre, { punto: punto, evento: e });
+                // Cuando se clickea un marcador, en el HTML se muestran sus atributos
+                // como esta dentro de UN MARCADOR, toma solo los atributos de ESE marcador
                 $("#nombrePunto").text(String(punto.nombre));
                 $("#direccionPunto").text(String(punto.direccion));
                 $("#materialPunto").text(String(punto.tipos));
@@ -50,16 +54,20 @@ function inicializarMapa() {
                 $("#longitudPunto").text(String(punto.lng));
 
                 if (typeof marcadorUsuario !== 'undefined' && marcadorUsuario) {
+                    // si el usuario NO INGRESA una ubicacion, no se calcula la distancia
+                    // Aqui se calcula la distancia entre el marcador del usuario y el marcador del punto
                     const latLngUsuario = marcadorUsuario.getLatLng();
                     const latLngPunto = L.latLng(punto.lat, punto.lng);
                     const distanciaMetros = latLngUsuario.distanceTo(latLngPunto);
 
                     let textoDistancia;
+                    // Aqui se parsea a KM o METROS dependiendo de la distancia
                     if (distanciaMetros > 1000) {
                         textoDistancia = (distanciaMetros / 1000).toFixed(2) + " km";
                     } else {
                         textoDistancia = Math.round(distanciaMetros) + " m";
                     }
+                    // Aqui se muestra la distancia en el HTML
                     $("#distanciaPunto").text(textoDistancia);
                 } else {
                     $("#distanciaPunto").text("Ubicación no definida");
@@ -70,7 +78,7 @@ function inicializarMapa() {
 
     renderMarkers(puntosVerdes);
 
-    const inputBusqueda = document.querySelector('#busq input');
+    const inputBusqueda = document.querySelector('#busq input');  // este es el input de busqueda por material
 
 
     let marcadorUsuario;
@@ -134,5 +142,5 @@ function inicializarMapa() {
 document.addEventListener('DOMContentLoaded', inicializarMapa);
 
 $(document).ready(function () {
-    console.log("jQuery está funcionando!");
+    console.log("OMG!");
 });
