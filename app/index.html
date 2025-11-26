@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Puntos Verdes Osorno (Separado)</title>
+    <title>Puntos Verdes Osorno</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script src="script.js" defer></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <script src="script.js" type="module" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
-    
-    
+
+
     <style>
-        
+
     </style>
 </head>
 
@@ -19,22 +21,56 @@
     <div class="main">
         <div class="header">
             <div class="title">
-                <h1>Puntos Verdes en Osorno (Código Limpio)</h1>
+                <h1>Puntos Verdes en Osorno</h1>
             </div>
             <div id="busq">
                 <input type="text" placeholder="ingrese ubicacion" class="form-control">
             </div>
         </div>
-        
+
         <div class="content">
             <div id="map"></div>
+
+            <div class="descPunto form-control form-neon">
+                <div class="text-center mt-2 pb-2"> Descripción </div>
+
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="col-5">nombre</td>
+                            <td id="nombrePunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Dirección</td>
+                            <td id="direccionPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">material aceptado</td>
+                            <td id="materialPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Latitud</td>
+                            <td id="latitudPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Longitud</td>
+                            <td id="longitudPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p id="tipoPunto" class="card-body"></p>
+            </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <script src="mapa_puntos.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
+
 </html>

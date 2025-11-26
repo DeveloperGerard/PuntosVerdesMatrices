@@ -1,5 +1,4 @@
 .main {
-    background-color: greenyellow;
     height: 100vh;
 }
 
@@ -8,22 +7,29 @@
     justify-content: space-between;
     padding: 20px;
     align-items: center;
+    background-color: greenyellow;
 }
 
 #busq {
-
     width: 400px;
 }
 
 .content {
-    height: 500px; 
-    width: 90%;
+    display: flex;
+    height: 500px;
     margin-left: 30px;
+}
+
+.descPunto {
+    margin: 20px 20px 0 0;
+    width: 600px;
+    height: 500px;
 }
 
 #map {
     height: 500px;
-    width: 96vw;
-    border: 2px solid #00AA00;
+    width: 65vw;
+    border: 2px solid #323732;
     margin-right: 20px;
+    margin-top: 20px;
 }
