@@ -30,40 +30,25 @@ function inicializarMapa() {
         attribution: ''
     }).addTo(mapa);
 
-    const marcadoresLayer = L.layerGroup().addTo(mapa);
+    puntosVerdes.forEach(function (punto) {
+        const marcador = L.marker([punto.lat, punto.lng], { icon: IconoVerde }).addTo(mapa);
+        marcador.bindPopup(`
+            <h3>${punto.nombre}</h3>
+            <p>${punto.direccion}</p>
+        `);
 
-    function renderMarkers(puntos) {
-        marcadoresLayer.clearLayers();
-        puntos.forEach(function (punto) {
-            const marcador = L.marker([punto.lat, punto.lng], { icon: IconoVerde }).addTo(marcadoresLayer);
-            marcador.bindPopup(`
-                <h3>${punto.nombre}</h3>
-                <p>${punto.direccion}</p>
-            `);
-
-            marcador.on('click', function (e) {
-                console.log('Marcador clickeado:', punto.nombre, { punto: punto, evento: e });
-                $("#nombrePunto").text(String(punto.nombre));
-                $("#direccionPunto").text(String(punto.direccion));
-                $("#materialPunto").text(String(punto.tipos));
-                $("#latitudPunto").text(String(punto.lat));
-                $("#longitudPunto").text(String(punto.lng));
-            });
+        // Al hacer click en el marcador, registrar en consola qué marcador fue clickeado.
+        // Por ahora mostramos el nombre y el objeto `punto` para identificación.
+        marcador.on('click', function (e) {
+            // $('.descPunto').removeClass('d-none')
+            console.log('Marcador clickeado:', punto.nombre, { punto: punto, evento: e });
+            $("#nombrePunto").text(String(punto.nombre));
+            $("#direccionPunto").text(String(punto.direccion));
+            $("#materialPunto").text(String(punto.tipos));
+            $("#latitudPunto").text(String(punto.lat));
+            $("#longitudPunto").text(String(punto.lng));
         });
-    }
-
-    renderMarkers(puntosVerdes);
-
-    const inputBusqueda = document.querySelector('#busq input');
-    if (inputBusqueda) {
-        inputBusqueda.addEventListener('input', function (e) {
-            const texto = e.target.value.toLowerCase();
-            const filtrados = puntosVerdes.filter(punto =>
-                punto.tipos && punto.tipos.some(tipo => tipo.toLowerCase().includes(texto))
-            );
-            renderMarkers(filtrados);
-        });
-    }
+    });
 }
 
 document.addEventListener('DOMContentLoaded', inicializarMapa);
