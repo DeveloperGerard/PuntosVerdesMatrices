@@ -23,8 +23,12 @@
             <div class="title">
                 <h1>Puntos Verdes en Osorno</h1>
             </div>
-            <div id="busq">
-                <input type="text" placeholder="ingrese ubicacion" class="form-control">
+            <div id="busq" class="d-flex w-50 gap-2">
+                <input type="text" placeholder="Buscar por material" class="form-control">
+                <div class="input-group">
+                    <input type="text" id="inputDireccion" placeholder="ingrese su dirección" class="form-control">
+                    <button class="btn btn-primary" id="btnBuscarDireccion">Buscar</button>
+                </div>
             </div>
         </div>
 
@@ -56,6 +60,10 @@
                         <tr>
                             <td class="col-5">Longitud</td>
                             <td id="longitudPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Distancia</td>
+                            <td id="distanciaPunto" class="col-5">...</td>
                         </tr>
                     </tbody>
                 </table>

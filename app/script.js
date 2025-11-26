@@ -1,20 +1,20 @@
-
 import puntosVerdes from "./puntosVerdes.js";
 
 const LATITUD_OSORNO = -40.58;
 const LONGITUD_OSORNO = -73.11;
 const ZOOM_INICIAL = 13;
 
-// --- B.DATOS DE LOS PUNTOS VERDES-- -
-// const puntosVerdes = [
-//     { lat: -40.554960283646366, lng: -73.15505952664618, nombre: "Papel", descripcion: "Punto de reciclaje papel." },
-//     { lat: -40.557931469867086, lng: -73.15360040496259, nombre: "Cartón", descripcion: "Punto de reciclaje cartón." },
-//     { lat: -40.558133212294926, lng: -73.1546303732114, nombre: "Plastico", descripcion: "Punto de reciclaje plastico." },
-//     { lat: -40.57397311016472, lng: -73.14947027145598, nombre: "Vidrio", descripcion: "Punto de reciclaje vidrio." } // prueba
-// ];
-
 const IconoVerde = L.icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const IconoUsuario = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -30,25 +30,105 @@ function inicializarMapa() {
         attribution: ''
     }).addTo(mapa);
 
-    puntosVerdes.forEach(function (punto) {
-        const marcador = L.marker([punto.lat, punto.lng], { icon: IconoVerde }).addTo(mapa);
-        marcador.bindPopup(`
-            <h3>${punto.nombre}</h3>
-            <p>${punto.direccion}</p>
-        `);
+    const marcadoresLayer = L.layerGroup().addTo(mapa);
 
-        // Al hacer click en el marcador, registrar en consola qué marcador fue clickeado.
-        // Por ahora mostramos el nombre y el objeto `punto` para identificación.
-        marcador.on('click', function (e) {
-            // $('.descPunto').removeClass('d-none')
-            console.log('Marcador clickeado:', punto.nombre, { punto: punto, evento: e });
-            $("#nombrePunto").text(String(punto.nombre));
-            $("#direccionPunto").text(String(punto.direccion));
-            $("#materialPunto").text(String(punto.tipos));
-            $("#latitudPunto").text(String(punto.lat));
-            $("#longitudPunto").text(String(punto.lng));
+    function renderMarkers(puntos) {
+        marcadoresLayer.clearLayers();
+        puntos.forEach(function (punto) {
+            const marcador = L.marker([punto.lat, punto.lng], { icon: IconoVerde }).addTo(marcadoresLayer);
+            marcador.bindPopup(`
+                <h3>${punto.nombre}</h3>
+                <p>${punto.direccion}</p>
+            `);
+
+            marcador.on('click', function (e) {
+                console.log('Marcador clickeado:', punto.nombre, { punto: punto, evento: e });
+                $("#nombrePunto").text(String(punto.nombre));
+                $("#direccionPunto").text(String(punto.direccion));
+                $("#materialPunto").text(String(punto.tipos));
+                $("#latitudPunto").text(String(punto.lat));
+                $("#longitudPunto").text(String(punto.lng));
+
+                if (typeof marcadorUsuario !== 'undefined' && marcadorUsuario) {
+                    const latLngUsuario = marcadorUsuario.getLatLng();
+                    const latLngPunto = L.latLng(punto.lat, punto.lng);
+                    const distanciaMetros = latLngUsuario.distanceTo(latLngPunto);
+
+                    let textoDistancia;
+                    if (distanciaMetros > 1000) {
+                        textoDistancia = (distanciaMetros / 1000).toFixed(2) + " km";
+                    } else {
+                        textoDistancia = Math.round(distanciaMetros) + " m";
+                    }
+                    $("#distanciaPunto").text(textoDistancia);
+                } else {
+                    $("#distanciaPunto").text("Ubicación no definida");
+                }
+            });
         });
-    });
+    }
+
+    renderMarkers(puntosVerdes);
+
+    const inputBusqueda = document.querySelector('#busq input');
+
+
+    let marcadorUsuario;
+
+    async function buscarDireccion(direccion) {
+        if (!direccion) return;
+
+        // Agregar "Osorno, Chile" para mejorar la precisión si el usuario no lo especifica
+        const query = `${direccion}, Osorno, Chile`;
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                const lat = parseFloat(data[0].lat);
+                const lon = parseFloat(data[0].lon);
+
+                if (marcadorUsuario) {
+                    mapa.removeLayer(marcadorUsuario);
+                }
+
+                marcadorUsuario = L.marker([lat, lon], { icon: IconoUsuario }).addTo(mapa);
+                marcadorUsuario.bindPopup(`<b>Tu Ubicación</b><br>${data[0].display_name}`).openPopup();
+                mapa.setView([lat, lon], 15);
+            } else {
+                alert("No se encontró la dirección.");
+            }
+        } catch (error) {
+            console.error("Error al buscar la dirección:", error);
+            alert("Hubo un error al buscar la dirección.");
+        }
+    }
+
+    const btnBuscarDireccion = document.getElementById('btnBuscarDireccion');
+    const inputDireccion = document.getElementById('inputDireccion');
+
+    if (btnBuscarDireccion && inputDireccion) {
+        btnBuscarDireccion.addEventListener('click', () => {
+            buscarDireccion(inputDireccion.value);
+        });
+
+        inputDireccion.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                buscarDireccion(inputDireccion.value);
+            }
+        });
+    }
+    if (inputBusqueda) {
+        inputBusqueda.addEventListener('input', function (e) {
+            const texto = e.target.value.toLowerCase();
+            const filtrados = puntosVerdes.filter(punto =>
+                punto.tipos && punto.tipos.some(tipo => tipo.toLowerCase().includes(texto))
+            );
+            renderMarkers(filtrados);
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', inicializarMapa);
