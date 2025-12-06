@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Puntos Verdes Osorno</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="{{ url_for('static', filename = 'script.js') }}" type="module" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
+
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="header">
+            <div class="title">
+                <h1>ReciPlus</h1>
+            </div>
+            <div id="busq" class="d-flex gap-2">
+                <!-- <input id="buscarPorMaterial" type="text" placeholder="Buscar por material" class="form-control"> -->
+                <div class="input-group">
+                    <input type="text" id="inputDireccion" placeholder="ingrese su dirección" class="form-control">
+                    <button class="btn btn-warning" id="btnBuscarDireccion">Buscar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="col-9" id="map"></div>
+
+            <div id="descFaseUno" class="descPunto form-control form-neon d-none">
+                <p class="text-center p-2">Ingresa una dirección para conocer el punto más cercano a tu zona</p>
+            </div>
+
+            <div id="descFaseDos" class="descPunto form-control form-neon">
+                <div class="text-center mt-2 pb-2"> Descripción </div>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="col-5">nombre</td>
+                            <td id="nombrePunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Dirección</td>
+                            <td id="direccionPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <!-- tipos de material -->
+                        <tr class="">
+                            <td class="col-5">vidrio <i class="fa-solid fa-wine-bottle"></i></td>
+                            <td id="vidrio" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Latitud</td>
+                            <td id="latitudPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Longitud</td>
+                            <td id="longitudPunto" class="col-5">seleccione punto</td>
+                        </tr>
+                        <tr>
+                            <td class="col-5">Distancia</td>
+                            <td id="distanciaPunto" class="col-5">...</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p id="tipoPunto" class="card-body"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/629dcf57a5.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
