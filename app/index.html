@@ -21,21 +21,25 @@
     <div class="main">
         <div class="header">
             <div class="title">
-                <h1>Puntos Verdes en Osorno</h1>
+                <h1>ReciPlus</h1>
             </div>
             <div id="busq" class="d-flex w-50 gap-2">
                 <input type="text" placeholder="Buscar por material" class="form-control">
                 <div class="input-group">
                     <input type="text" id="inputDireccion" placeholder="ingrese su dirección" class="form-control">
-                    <button class="btn btn-primary" id="btnBuscarDireccion">Buscar</button>
+                    <button class="btn btn-warning" id="btnBuscarDireccion">Buscar</button>
                 </div>
             </div>
         </div>
 
         <div class="content">
-            <div id="map"></div>
+            <div class="col-9" id="map"></div>
 
-            <div class="descPunto form-control form-neon">
+            <div id="descFaceUno" class="descPunto form-control form-neon">
+                <p class="text-center p-2">Ingresa una dirección para conocer el punto más cercano a tu zona</p>
+            </div>
+
+            <div class="descPunto form-control form-neon d-none">
                 <div class="text-center mt-2 pb-2"> Descripción </div>
 
 
@@ -49,9 +53,10 @@
                             <td class="col-5">Dirección</td>
                             <td id="direccionPunto" class="col-5">seleccione punto</td>
                         </tr>
-                        <tr>
-                            <td class="col-5">material aceptado</td>
-                            <td id="materialPunto" class="col-5">seleccione punto</td>
+                        <!-- tipos de material -->
+                        <tr class="">
+                            <td class="col-5">vidrio <i class="fa-solid fa-wine-bottle"></i></td>
+                            <td id="vidrio" class="col-5">seleccione punto</td>
                         </tr>
                         <tr>
                             <td class="col-5">Latitud</td>
@@ -79,6 +84,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/629dcf57a5.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

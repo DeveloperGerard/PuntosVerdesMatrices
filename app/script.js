@@ -142,5 +142,5 @@ function inicializarMapa() {
 document.addEventListener('DOMContentLoaded', inicializarMapa);
 
 $(document).ready(function () {
-    console.log("OMG!");
+    console.log("ready");
 });

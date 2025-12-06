@@ -10,5 +10,6 @@ venv
 
 virtualenv
 .virtualenv
+.vscode
 
 /migrations
